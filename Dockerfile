@@ -1,8 +1,12 @@
-FROM openjdk:8-jre-alpine
+FROM node:latest
 
-EXPOSE 8080
+WORKDIR /usr/src/app
 
-COPY ./build/libs/my-app-1.0-SNAPSHOT.jar /usr/app/
-WORKDIR /usr/app
+COPY package.json ./
 
-ENTRYPOINT ["java", "-jar", "my-app-1.0-SNAPSHOT.jar"]
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+CMD [ "node", "index.js" ]
